@@ -22,13 +22,6 @@ check_no_container() {
     fi
 }
 
-check_no_file() {
-    if [[ -e "$1" ]]; then
-        echo_err "File exists, remove it first: $1"
-        exit 1
-    fi
-}
-
 # Check requirements
 if [[ "$#" -ne 2 ]]; then
     echo_err "Usage: ./ss-server-docker.sh <ssmgr home directory> <ss-manager manage address port>"
@@ -46,7 +39,7 @@ docker run --name ss-manager -dt --network host mritd/shadowsocks -m ss-manager 
 echo_ok "Docker container started: ss-manager"
 
 # ssmgr-server
-docker run --name ssmgr-server -idt -v $SSMGR_HOME:/root/.ssmgr --network host gyteng/ssmgr --debug
+docker run --name ssmgr-server -idt -v $SSMGR_HOME:/root/.ssmgr --network host gyteng/ssmgr -c /root/.ssmgr/server.yml --debug
 echo_ok "Docker container started: ssmgr-server"
 
 # ssmgr-telegram

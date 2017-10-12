@@ -35,7 +35,7 @@ check_no_container ssmgr-telegram
 
 # ss-manager
 SS_MANAGER_ARGS="-m aes-256-cfb -u --manager-address 127.0.0.1:$2 -v"
-docker run --name ss-manager -dt --network host mritd/shadowsocks -m ss-manager -s "$SS_MANAGER_ARGS"
+docker run --name ss-manager -idt --network host mritd/shadowsocks -m ss-manager -s "$SS_MANAGER_ARGS"
 echo_ok "Docker container started: ss-manager"
 
 # ssmgr-server

@@ -35,15 +35,15 @@ check_no_container ssmgr-telegram
 
 # ss-manager
 SS_MANAGER_ARGS="-m aes-256-cfb -u --manager-address 127.0.0.1:$2 -v"
-docker run --name ss-manager -idt --network host mritd/shadowsocks -m ss-manager -s "$SS_MANAGER_ARGS"
+docker run --name ss-manager -idt --network host --restart always mritd/shadowsocks -m ss-manager -s "$SS_MANAGER_ARGS"
 echo_ok "Docker container started: ss-manager"
 
 # ssmgr-server
-docker run --name ssmgr-server -idt -v $SSMGR_HOME:/root/.ssmgr --network host gyteng/ssmgr -c /root/.ssmgr/server.yml --debug
+docker run --name ssmgr-server -idt -v $SSMGR_HOME:/root/.ssmgr --network host --restart always gyteng/ssmgr -c /root/.ssmgr/server.yml --debug
 echo_ok "Docker container started: ssmgr-server"
 
 # ssmgr-telegram
-docker run --name ssmgr-telegram -idt -v $SSMGR_HOME:/root/.ssmgr --network host gyteng/ssmgr -c /root/.ssmgr/telegram.yml --debug
+docker run --name ssmgr-telegram -idt -v $SSMGR_HOME:/root/.ssmgr --network host --restart always gyteng/ssmgr -c /root/.ssmgr/telegram.yml --debug
 echo_ok "Docker container started: ssmgr-telegram"
 
 # Done

@@ -741,7 +741,10 @@ search_desktop_file()
 
     local file=""
     # look for both vendor-app.desktop, vendor/app.desktop
-    if [ -r "$dir/$default" ]; then
+    # Since this function may be called with the first argument passed the full path of the default .desktop file, test it in advance
+    if [ -r "$default" ]; then
+      file="$default"
+    elif [ -r "$dir/$default" ]; then
       file="$dir/$default"
     elif [ -r "$dir/`echo $default | sed -e 's|-|/|'`" ]; then
       file="$dir/`echo $default | sed -e 's|-|/|'`"
@@ -911,7 +914,8 @@ open_generic()
 open_lxde()
 {
     # pcmanfm only knows how to handle file:// urls and filepaths, it seems.
-    if is_file_url_or_path "$1"; then
+    # Add pcmanfm test!!
+    if is_file_url_or_path "$1" && which "pcmanfm"; then
         local file="$(file_url_to_path "$1")"
 
         # handle relative paths
